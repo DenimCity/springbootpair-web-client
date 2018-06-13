@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as API from "../utils/API"
-// import axios from 'axios'
+import {Redirect} from 'react-router-dom'
+import axios from 'axios'
 
 export default class Door extends Component {
 
@@ -8,7 +9,16 @@ export default class Door extends Component {
         door: {
             id:null,
             name:null
-        }
+        },
+        redirect:false
+    }
+
+    deleteDoor(){
+        const doorId = this.props.match.params.doorId
+        axios.delete(`http://localhost:8090/door/${doorId}`).then(response => {
+            console.log('delete', doorId)
+            // this.setState({})
+        })
     }
 
 
@@ -25,7 +35,12 @@ const doorId = this.props.match.params.doorId
 }
 
   render() {
-      const { door } = this.state
+
+      const { door, redirect } = this.state
+
+      if( redirect ){
+          return (<Redirect to={`/doors`}/>)
+      }
     return (
       <div>
           <div>
@@ -33,7 +48,8 @@ const doorId = this.props.match.params.doorId
           <h3>{door.name}</h3>
           </div>
           <div>
-              <a href={`/doors`}> Back </a>
+              <a href={`/doors`}> <button>Back</button> </a>
+                <button onClick={ this.deleteDoor() }> Delete </button>
           </div>
       </div>
     )
