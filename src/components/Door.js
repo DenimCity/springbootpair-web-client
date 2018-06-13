@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as API from "../utils/API"
+// import axios from 'axios'
 
 export default class Door extends Component {
 
@@ -10,8 +11,10 @@ export default class Door extends Component {
         }
     }
 
-componentWillMount = (payload) => {
-  API.getDoor(payload).then(response => {
+
+componentWillMount = () => {
+const doorId = this.props.match.params.doorId
+  API.getDoor(doorId).then(response => {
       if(response ===!200) {
           console.log("Error: ", response.data.error)
       } else {
