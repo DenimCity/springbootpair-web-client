@@ -1,6 +1,6 @@
 import axios from "axios"
 const BASEURL = "http://localhost:8080/post"
-const api = ``
+const baseApi = `http://localhost:8090/`
 
 
   export let createUser = (query) =>{
@@ -15,13 +15,10 @@ const api = ``
   }
 
   export const getAllDoors = () => {
-    console.log('getAllDoors function')
-   return axios.get( api ) 
-
+   return axios.get( baseApi + "door" ) 
   }
 
-  export const getDoor = () => {
-  const doorId = this.props.match.params.doorId
+  export const getDoor = (doorId) => {
   console.log('grab individual door function')
-  return axios.get(api + "/"+ doorId )
+  return axios.get(baseApi + "/door/"+ doorId )
   }
