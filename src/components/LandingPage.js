@@ -31,6 +31,12 @@ export default class LandingPage extends Component {
           </p>
         </Modal>
         <div>
+            <div>
+                <a href={`/doors/create`}>
+                    <button>Create Door</button>
+
+                </a>
+            </div>
         <a href="/doorlist">
           <button>
             View Doors

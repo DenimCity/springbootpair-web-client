@@ -1,51 +1,49 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {Redirect, Link} from 'react-router-dom'
 
 export default class DoorForm extends Component {
 
     state = {
-        newDoor: {
-            name:'undefined'
+            name:'',
+            redirect:false
         }
-    }
+    
 
 
+    handleChange = (e) => {
+    e.preventDefault()  
+    console.log(e.target.value)
+    this.setState({ [e.target.name]: e.target.value })
+          }
 
-    createDoor(){
-        const payload = this.state.newDoor
-        axios.post(`http://localhost:8090/door/new`, payload).then(response => {
-            console.log('response', response)
-            console.log('response', response.data)
+    handleSubmit = (e) => {
+    e.preventDefault()
+    axios.post(`http://localhost:8090/door/new`, this.state)
+    .then(res => {
+        this.setState({ name: res.data, redirect: true })
         })
     }
 
-    handleChange = (e) => {
-        const attribute = e.target.name
-        const value =  e.target.value
-        const newDoor = {...this.state.newDoor}
-        newDoor[attribute] = value
-        this.setState({newDoor})
-          }
-
-          handleSubmit = (e) => {
-            e.preventDefault()
-            this.createDoor()
-        }
-
   render() {
+      if(this.state.redirect){
+          return <Redirect to='/doorlist'/>
+      }
     return (
       <div>
           <form onSubmit={this.handleSubmit}>
-          <input
-          type="text"
-          onChange={this.handleSubmit}
-          name="name"
-          value={this.state.newDoor.name}
-          required
-          placeholder="Insert Door Name"
-          />
-        <submit>Submit</submit>
-          </form>
+          <div>
+            <input
+              onChange={this.handleChange}
+              name="name"
+              placeholder="Create Door"
+              type="text"
+              value={this.state.name} />
+          </div>
+          <input type="submit" value="Submit"/>
+          <Link to="/doors">
+          </Link>
+        </form>
       </div>
     )
   }

@@ -10,7 +10,6 @@ export default class DoorsList extends Component {
         doors: [],
     }
 
-
     componentWillMount() {
         API.getAllDoors().then(response => {
             if (response.status === !200) {
@@ -25,9 +24,6 @@ export default class DoorsList extends Component {
     render() {
         return (
             <div>
-                {/* <a href="doors/create">
-            <button> Create Door</button>
-        </a> */}
                 <div>
                     {this.state.doors.map((door, i) => {
                         return (
@@ -36,7 +32,6 @@ export default class DoorsList extends Component {
                             </div>
                         )
                     })}
-                    {/* <DoorTable doors={this.state.doors} /> */}
                 </div>
             </div>
         )
